@@ -11,7 +11,7 @@
         "dnsnameServer01PublicIP1": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "description of dns name for server01"
             }
         }
     },
