@@ -3,10 +3,15 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "publicipaddress1name": {
-            "value": "01publicipaddressrmdev01"
+            "value": "01publicipaddressrmdev2121"
         },
         "dnsnameServer01PublicIP1": { 
             "value": "robertserver2121"
+        },
+        "serverubuntu01storage": {
+            "value": "serverubuntu2121"
+        },
+        "subnetnet1name": {
+            "value": "Subnet-2"
         }
-    }
 }

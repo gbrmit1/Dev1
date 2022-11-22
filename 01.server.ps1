@@ -7,8 +7,8 @@ New-AzResourceGroup -Name $rg -Location northeurope
 New-AzResourceGroupDeployment `
 -Name RM-Dev `
 -ResourceGroupName $rg `
--TemplateFile /home/mitchell/01.network.json
--TemplateParameterFile /home/mitchell/01.network.parameters.json
+-TemplateUri https://raw.githubusercontent.com/gbrmit1/Dev1/main/01.network.json `
+-TemplateParameterUri https://raw.githubusercontent.com/gbrmit1/Dev1/main/01.network.parameters.json
 
 Write-Host "
 Clever Boy - Finished Deployment Network!
@@ -18,7 +18,7 @@ Clever Boy - Finished Deployment Network!
 
 New-AzResourceGroupDeployment `
 -Name RM-Dev `
--ResourceGroupName RM-ARM-RG-01 `
+-ResourceGroupName $rg `
 -TemplateUri https://raw.githubusercontent.com/gbrmit1/Dev1/main/01.server.json `
 -TemplateParameterUri https://raw.githubusercontent.com/gbrmit1/Dev1/main/01.server.parameters.json
 

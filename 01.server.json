@@ -13,11 +13,39 @@
             "metadata": {
                 "description": "description of dns name for server01"
             }
+        },
+        "serverubuntu01storage": {
+            "type": "string",
+            "metadata": {
+                "description": "Ubuntu Server name"
+            }
+        },
+        "subnetnet1name": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
         }
     },
     "functions": [],
     "variables": {},
     "resources": [
+        //Server Storage
+        {
+            "name": "[parameters('serverubuntu01storage')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2021-04-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "ubuntuVM1 Storage Account"
+            },
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "kind": "Storage"
+        },
+        //-------------------
+        // Public IP Address
                 {
             "name": "[parameters('publicipaddress1name')]",
             "type": "Microsoft.Network/publicIPAddresses",
@@ -30,6 +58,122 @@
                 "publicIPAllocationMethod": "Dynamic",
                 "dnsSettings": {
                     "domainNameLabel": "[parameters('dnsnameServer01PublicIP1')]"
+                }
+            }
+        },
+        //-------------
+        // Server NSG
+        {
+            "name": "serverubuntu01-nsg",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-11-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "nsgRule1",
+                        "properties": {
+                            "description": "description",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                       "name": "nsgRule1",
+                        "properties": {
+                            "description": "description",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound" 
+                        }   
+                    }
+                ]
+            }
+        },
+        //---------------------
+        // Server Network Interface
+        {
+            "name": "serverubuntu01-NetworkInterface",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-11-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "serverubuntu01-NetworkInterface"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipConfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": 
+                                 "[parameters('publicipaddress1name')]"
+                            ,
+                            "subnet": {
+                                "id": "[parameters('subnetnet1name')]"
+                                //"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'ubuntuVM1-VirtualNetwork', 'ubuntuVM1-VirtualNetwork-Subnet')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        // -----------------------
+        // Server Configuration
+        {
+            "name": "serverubuntu01",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-03-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "serverubuntu01"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_A2_v2"
+                },
+                "osProfile": {
+                    "computerName": "ubuntuVM1",
+                    "adminUsername": "adminUsername",
+                    "adminPassword": "adminPassword"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "16.04-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "ubuntuVM1-OSDisk",
+                        "caching": "ReadWrite",
+                        "createOption": "FromImage"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'serverubuntu01-NetworkInterface')]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        //"storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', "[parameters('serverubuntu01storage')]")).primaryEndpoints.blob]"
+                        "StorageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/','serverubuntu01storage')).primaryEndpoints.blob]"
+                    }
                 }
             }
         }
