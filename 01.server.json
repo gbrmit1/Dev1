@@ -121,7 +121,8 @@
                                  "[parameters('publicipaddress1name')]"
                             ,
                             "subnet": {
-                                "id": "[parameters('subnetnet1name')]"
+                                "id" : "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('subnetnet1name'))]"
+                                //"id": "[parameters('subnetnet1name')]"
                                 //"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'ubuntuVM1-VirtualNetwork', 'ubuntuVM1-VirtualNetwork-Subnet')]"
                             }
                         }
