@@ -60,12 +60,17 @@
             "tags": {
                 "displayName": "[parameters('publicipaddress1name')]"
             },
+            "sku": {
+                "name": "Basic"
+            },
             "properties": {
                 "publicIPAllocationMethod": "Dynamic",
+                "publicIPAddressVersion": "IPv4",
                 "dnsSettings": {
                     "domainNameLabel": "[parameters('dnsnameServer01PublicIP1')]"
                 }
-            }
+            },
+            "idleTimeoutInMinutes": 4
         },
         //-------------
         // Server NSG
