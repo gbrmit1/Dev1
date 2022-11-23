@@ -123,8 +123,8 @@
                         "name": "ipConfig1",
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": 
-                                 "[parameters('publicipaddress1name')]"
+                            "publicIPAddress": "[resourceId ('Microsoft.networkInterfaces', parameters('publicipaddress1name'))]"
+                            //     [parameters('publicipaddress1name')]
                             ,
                             "subnet": {
                                 
