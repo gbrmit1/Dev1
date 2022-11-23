@@ -172,7 +172,7 @@
                     "bootDiagnostics": {
                         "enabled": true,
                         //"storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', "[parameters('serverubuntu01storage')]")).primaryEndpoints.blob]"
-                        "StorageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/','serverubuntu01storage')).primaryEndpoints.blob]"
+                        "StorageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', parameters('serverubuntu01storage'))).primaryEndpoints.blob]"
                     }
                 }
             }
