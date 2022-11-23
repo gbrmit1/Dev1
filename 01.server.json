@@ -25,6 +25,12 @@
             "metadata": {
                 "description": "description"
             }
+        },
+        "vnet1name": {
+            "type": "string",
+            "metadata": {
+                "description": "What is the name of your vnet"
+            }
         }
     },
     "functions": [],
@@ -121,7 +127,8 @@
                                  "[parameters('publicipaddress1name')]"
                             ,
                             "subnet": {
-                                "id" : "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('subnetnet1name'))]"
+                                
+                                "id" : "[resourceId ('Microsoft.Network/virtualNetworks/subnets', parameters('vnet1name'), parameters('subnetnet1name'))]"
                                 //"id": "[parameters('subnetnet1name')]"
                                 //"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'ubuntuVM1-VirtualNetwork', 'ubuntuVM1-VirtualNetwork-Subnet')]"
                             }

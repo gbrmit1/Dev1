@@ -13,6 +13,9 @@
         },
         "subnetnet1name": {
             "value": "Subnet-2"
+        },
+        "vnet1name": {
+            "value": "armrobertmitchellvnet2121"
         }
 }
 }
