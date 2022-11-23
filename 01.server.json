@@ -123,14 +123,14 @@
                         "name": "ipConfig1",
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": "[resourceId ('Microsoft.Network/publicIPAddresses', parameters('publicipaddress1name'))]"
-                            //     [parameters('publicipaddress1name')]
+                            
+                            "publicIPAddress": {
+                                "id": "[resourceId ('Microsoft.Network/publicIPAddresses', parameters('publicipaddress1name'))]"
+                            } 
+                            
                             ,
                             "subnet": {
-                                
                                 "id" : "[resourceId ('Microsoft.Network/virtualNetworks/subnets', parameters('vnet1name'), parameters('subnetnet1name'))]"
-                                //"id": "[parameters('subnetnet1name')]"
-                                //"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'ubuntuVM1-VirtualNetwork', 'ubuntuVM1-VirtualNetwork-Subnet')]"
                             }
                         }
                     }
